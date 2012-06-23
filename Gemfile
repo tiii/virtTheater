@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
-gem "sinatra"
-gem "mustache"
-gem "thin"
+gem 'shotgun'
+gem 'sinatra'
+gem 'activerecord'
+gem 'sinatra-activerecord'
+gem 'haml'
+gem 'omniauth-facebook'
+gem 'thin'

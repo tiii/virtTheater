@@ -1,3 +1,5 @@
+/config
+
 *.rbc
 *.sassc
 .sass-cache
