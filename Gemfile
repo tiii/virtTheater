@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'shotgun'
+group :development do
+  gem 'shotgun'  
+end
+
 gem 'sinatra'
 gem 'activerecord'
 gem 'sinatra-activerecord'
