@@ -7,7 +7,7 @@ module VirtTheater
 
   class VirtTheaterWebApp < Sinatra::Base
     get '/' do
-      haml :index, locals: {env: Sinatra.env}
+      haml :index, locals: {env: ENV["RACK_ENV"]}
     end
 
     get'/auth' do
