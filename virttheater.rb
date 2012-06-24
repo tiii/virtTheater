@@ -1,8 +1,9 @@
 require 'sinatra'
 require './models'
 
-CONFIG = ENV.to_hash
-CONFIG.merge YAML::load(File.open('./config/environment.yml'))[ENV["RACK_ENV"].to_sym] if ENV["RACK_ENV"] == "development"
+require './config/config'
+
+puts "conf", CONFIG.inspect
 
 module VirtTheater
 
@@ -12,7 +13,7 @@ module VirtTheater
     end
 
     get'/auth' do
-      haml :auth, locals: {app_id: CONFIG[:app_id], scope: CONFIG[:scope]}
+      haml :auth, locals: {app_id: CONFIG["app_id"], scope: CONFIG["scope"]}
     end
 
     post '/canvas/' do
