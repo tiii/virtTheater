@@ -16,10 +16,13 @@
             xfbml  : true  // parse XFBML
           });
 
-          var loginbutton = $('#fb-login');
+          var loginButton = $('#fb-login');
           var logoutButton = $('#fb-logout');
           var closeButton = $('#fb-close-button');
           var statusText = $('#fb-login-status');
+
+          loginButton.hide();
+          logoutButton.hide();
 
           var setLoggedIn = function(response) {
             $.getJSON('/auth/facebook/callback', response, function(json) {
@@ -32,18 +35,18 @@
               setLoggedIn(response.authResponse);
               statusText.html("You are already logged in.");
               closeButton.show();
-              loginbutton.hide();
+              loginButton.hide();
               logoutButton.hide();
             } else if (response.status === 'not_authorized') {
-              loginbutton.show();
+              loginButton.show();
               logoutButton.hide();
             } else {
-              loginbutton.show();
+              loginButton.show();
               logoutButton.hide();
             }
           });
 
-          loginbutton.click(function(e) {
+          loginButton.click(function(e) {
             e.preventDefault();
 
             FB.login(function(response) {

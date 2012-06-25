@@ -15,7 +15,7 @@ module VirtTheater
   class VirtTheaterWebApp < Sinatra::Base
 
     enable :sessions
-    set :session_secret, "My session secret" if ENV["RACK_ENV"] == "production"
+    set :session_secret, "dhjc|4u8u44cq2e.92ru934i,390c4" if ENV["RACK_ENV"] == "development"
 
     before do
       session[:oauth] ||= {}
@@ -34,16 +34,17 @@ module VirtTheater
       session[:oauth][:access_token] = params[:accessToken] #request.cookies["fbsr_#{CONFIG["app_id"]}"]
       graph = FbGraph::User.fetch('me', :access_token => params[:accessToken])
 
-      user = User.find_or_create_by_email(graph.email)
-      user.first_name = graph.first_name
-      user.last_name = graph.last_name
-      user.access_token = graph.access_token
-
-      {:success => user.save}.to_json
+      u = User.find_or_create_by_email(graph.email)
+      u.first_name = graph.first_name
+      u.last_name = graph.last_name
+      u.access_token = graph.access_token
+      puts u.inspect
+      {:success => u.save}.to_json
     end
 
     get '/auth/logout' do
       session[:oauth][:access_token] = {}
+      redirect '/'
     end
     get '/style.css' do
       sass :style
@@ -51,6 +52,7 @@ module VirtTheater
 
     def logged_in?
       return (!@user.nil?)
+      return !@user.nil?
     end
   end
 
