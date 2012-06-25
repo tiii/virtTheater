@@ -22,5 +22,5 @@
           %p
             = "#{playdate.price} €    "
             %span{:class => "ui-li-count ui-btn-up-c ui-btn-corner-all ticket-indicator"}    Tickets Available!  
-            %a{:href => "/plays/#{playdate.play.id}/#{playdate.play.url_title}/buy", :"data-role" => "button", :"data-theme" => "b", :"data-inline" => "true", :"data-mini" => "true" } Buy Tickets
+            %a{:href => "/plays/#{playdate.play.id}/#{playdate.play.url_title}/buy/#{playdate.id}", :"data-role" => "button", :"data-theme" => "b", :"data-inline" => "true", :"data-mini" => "true" } Buy Tickets
           %hr
