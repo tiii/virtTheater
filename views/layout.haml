@@ -12,15 +12,13 @@
     %script{src: "http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"}
     
     =# spine.js
-    %script{src: "javascript/lib/spine.js"}
-    %script{src: "javascript/lib/local.js"}
+    %script{src: "/javascript/lib/spine.js"}
+    %script{src: "/javascript/lib/local.js"}
     
     =# JS
-    %script{src: "javascript/app/app.js"}
-    :javascript
-        $().initApp("initIndex", "#login-dialog");
-
+    %script{src: "/javascript/app/app.js"}
+    
     =# Stylesheets
-    %link{rel: "stylesheet", href:"stylesheets/style.css"}
+    %link{rel: "stylesheet", href:"/stylesheets/style.css"}
 
   %body= yield
