@@ -11,7 +11,6 @@ end
 
 gem 'sinatra'
 gem 'sinatra-activerecord'
-gem 'sass'
 gem 'haml'
 gem 'thin'
 gem 'fb_graph'

@@ -67,10 +67,6 @@ module VirtTheater
       haml :about
     end
 
-    get '/style.css' do
-      sass :style
-    end
-
     def logged_in?
       return !@user.nil?
     end
