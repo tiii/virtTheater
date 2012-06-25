@@ -16,9 +16,9 @@
       %h3 Click to show dates
       - play.play_dates.each_with_index do |playdate, i|
         %div
-          %b= "#{dayname}"
+          %b= "#{playdate.dayname}"
           %span 
-            = "-  #{datetime}"
+            = "-  #{playdate.datetime}"
           %p
             = "#{playdate.price} €    "
             %span{:class => "ui-li-count ui-btn-up-c ui-btn-corner-all ticket-indicator"}    Tickets Available!  
