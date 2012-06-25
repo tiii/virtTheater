@@ -1,0 +1,16 @@
+%div{:"data-role" => "page"} 
+  %div{:"data-role" => "header"}
+    %a{:href => "#", :"data-rel" => "back", :"data-icon" => "back"} Back
+    - else
+    %h1 Virtual Theater
+    - if logged_in?
+      %a{:href => "/menu", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "grid"} My Account
+    - else
+      %a{:href => "/auth", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "gear"} Login
+      
+  %div{:"data-role" => "content"}
+    %img{:src => "data:image/png;base64,#{play.picture}"}
+    %h3= play.title
+    %p= play.description
+
+    

@@ -51,12 +51,15 @@ module VirtTheater
       haml :plays, :locals => {:plays => Play.all}
     end
 
+    get '/plays/:id/:title' do
+      haml :play, :locals => {:play => Play.find(params[:id])}
+    end
+
     get '/style.css' do
       sass :style
     end
 
     def logged_in?
-      return (!@user.nil?)
       return !@user.nil?
     end
   end
