@@ -1,5 +1,4 @@
 /config/environment.yml
-/db/*.db
 
 *.rbc
 *.sassc

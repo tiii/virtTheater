@@ -23,7 +23,11 @@ module VirtTheater
     end
 
     get '/' do
-      haml :index, locals: {env: ENV["RACK_ENV"]}
+      redirect '/news'
+    end
+
+    get '/news' do
+      haml :news, locals: {env: ENV["RACK_ENV"]}
     end
 
     get'/auth' do
@@ -44,7 +48,11 @@ module VirtTheater
 
     get '/auth/logout' do
       session[:oauth][:access_token] = {}
-      redirect '/'
+      {success: true}.to_json
+    end
+
+    get '/menu' do
+      haml :menu
     end
 
     get '/plays' do
@@ -57,10 +65,6 @@ module VirtTheater
 
     get '/about' do
       haml :about
-    end
-
-    get '/style.css' do
-      sass :style
     end
 
     def logged_in?

@@ -27,13 +27,13 @@
           var setLoggedIn = function(response) {
             $.getJSON('/auth/facebook/callback', response, function(json) {
               console.log("logged in");
+              statusText.html("You are already logged in.");
             });
           };
 
           FB.getLoginStatus(function(response) {
             if (response.status === 'connected') {
               setLoggedIn(response.authResponse);
-              statusText.html("You are already logged in.");
               closeButton.show();
               loginButton.hide();
               logoutButton.hide();
@@ -81,6 +81,16 @@
          ref.parentNode.insertBefore(js, ref);
       }(document));
     },
+    initMenuDialog: function(options) {
+      $('#logoutButton').click(function(e) {
+        $.getJSON('/auth/logout', function(json) {
+          if(json.success) {
+            console.log("logout: "+json.success);
+            $.mobile.changePage('/',{reloadPage: true});
+          }
+        });
+      });
+    },
     initAllPages: function(options){
     }
   };
@@ -97,7 +107,7 @@
         return methods.initAll.apply( this, arguments );
       } else {
         $.error( 'Method ' +  method + ' does not exist' );
-      } 
+      }
     }
   };
 })(jQuery);

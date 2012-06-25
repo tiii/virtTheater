@@ -10,6 +10,11 @@ end
 class Play < ActiveRecord::Base
   has_many :tickets
   has_many :play_dates
+
+  def url_title
+    require './helpers'
+    Helpers.sluggify(title)
+  end
 end
 
 class PlayDate < ActiveRecord::Base

@@ -17,10 +17,10 @@
     
     =# JS
     %script{src: "javascript/app/app.js"}
-
-    =# Stylesheets
-    %link{rel: "stylesheet", href:"style.css"}
     :javascript
         $().initApp("initIndex", "#login-dialog");
+
+    =# Stylesheets
+    %link{rel: "stylesheet", href:"stylesheets/style.css"}
 
   %body= yield
