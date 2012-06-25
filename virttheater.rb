@@ -23,7 +23,11 @@ module VirtTheater
     end
 
     get '/' do
-      haml :index, locals: {env: ENV["RACK_ENV"]}
+      redirect '/news'
+    end
+
+    get '/news' do
+      haml :news, locals: {env: ENV["RACK_ENV"]}
     end
 
     get'/auth' do
