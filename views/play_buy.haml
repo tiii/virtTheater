@@ -1,6 +1,6 @@
-%div{:"data-role" => "dialog", :"id" => "login-dialog"} 
+%div{:"data-role" => "dialog", :"id" => "play-buy-dialog"} 
   %div{:"data-role" => "header"}
-    %h1= "Buy Ticket"
+    %h1= "Buy Tickets"
   %div{:"data-role" => "content"}
     .ui-grid-a
       .ui-block-a
@@ -8,16 +8,21 @@
       .ui-block-b
         %h3= play.title
         %p= "#{playdate.dayname}, #{playdate.datetime}"
-        %p= "#{playdate.price} €"
-        %p= "#{playdate.ticket_count} left"
+        %p= "#{playdate.price} € p.p."
+        %p= "#{playdate.ticket_count} tickets left"
     - if logged_in?
       %p
         = "Hey #{user.first_name},"
-        How many Tickets do you want?
-      
-
+        how many Tickets do you want?
     - else
       %p 
         You need to be
         %a{:href => "/auth", :"data-rel" => "dialog", :"data-transition" => "pop"} logged in
         to buy Tickets
+    %form{:method => "post", :id => "ticket-form"}
+      %input{:type => "hidden", :name => "playdate", :value => playdate.id}
+      %input{:type => "range", :name => "ticket_count", :id => "ticket-count-slider", :value => 1, :min => 1, :max => 10, :disabled => !logged_in?}
+      -if logged_in?
+        %a{:"data-role" => "button", :id => "ticket-submit"} Buy!
+        :javascript
+          $().initApp("initPlayBuyDialog", "#play-buy-dialog");
