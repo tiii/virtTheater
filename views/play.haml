@@ -1,6 +1,6 @@
 %div{:"data-role" => "page", :"data-title" => "Virtual Theater - #{play.title}"} 
   %div{:"data-role" => "header"}
-    %a{:href => "#", :"data-rel" => "back", :"data-icon" => "back", :"data-transition" => "flip", :"data-direction" => "reverse"} Back
+    %a{:href => "/plays", :"data-icon" => "back", :"data-transition" => "flip", :"data-direction" => "reverse"} Back
     %h1 Virtual Theater
     - if logged_in?
       %a{:href => "/menu", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "grid"} Menu
@@ -14,10 +14,14 @@
 
     %div{:"data-role" => "collapsible"}
       %h3 Click to show dates
-      %div
-        .ui-grid-c
-          - a = ["a","b","c","d"]
-          - play.play_dates.each_with_index do |playdate, i|
-            %div{:class => "ui-block-#{a[i%4]}"}= "#{Time.at(playdate.playtime).to_date} | #{playdate.price} €"
+      - play.play_dates.each_with_index do |playdate, i|
+        - time = Time.at(playdate.playtime)
+        - dayname = time.strftime("%A")
+        - datetime = time.strftime("%d.%m.%Y %H:%M")
+        %div
+          %p= "#{dayname}"
+          %p
+            = "#{datetime} | #{playdate.price} €"
+            %a{:href => "/plays/#{playdate.play.id}/#{playdate.play.url_title}"}
 
     
