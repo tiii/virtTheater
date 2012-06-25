@@ -91,8 +91,13 @@
         $(this).unbind('click');
         data = $('#ticket-form').serialize();
         $.post('/tickets/buy', data, function(response) {
-          if(response.success)
+          if(response.success) {
             $.mobile.changePage('/ticket/'+response.id);
+          } else {
+            alert("There was an error");
+            $.mobile.changePage(window.prevPage,{reloadPage: true, changeHash: false});
+          }
+
         }, "json");
       });
     },

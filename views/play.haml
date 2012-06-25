@@ -18,9 +18,12 @@
         %div
           %b= "#{playdate.dayname}"
           %span 
-            = "-  #{playdate.datetime}"
+            = "- #{playdate.datetime}"
           %p
             = "#{playdate.price} €    "
-            %span{:class => "ui-li-count ui-btn-up-c ui-btn-corner-all ticket-indicator"}    Tickets Available!  
-            %a{:href => "/plays/#{playdate.play.id}/#{playdate.play.url_title}/buy/#{playdate.id}", :"data-role" => "button", :"data-theme" => "b", :"data-inline" => "true", :"data-mini" => "true" } Buy Tickets
+            %span{:class => "ui-li-count ui-btn-up-c ui-btn-corner-all ticket-indicator"}
+              = playdate.tickets_left
+              Tickets Available!  
+            - if playdate.tickets_left > 0
+              %a{:href => "/plays/#{playdate.play.id}/#{playdate.play.url_title}/buy/#{playdate.id}", :"data-role" => "button", :"data-theme" => "b", :"data-inline" => "true", :"data-mini" => "true" } Buy Tickets
           %hr

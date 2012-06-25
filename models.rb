@@ -33,8 +33,16 @@ class PlayDate < ActiveRecord::Base
     timestamp.strftime("%d.%m.%Y %H:%M")
   end
 
+  def full_date
+    "#{dayname}, #{datetime}"
+  end
+
   def tickets_left
-    ticket_count
+    ticket_count - Ticket.where(:play_date_id => id).sum(:count)
+  end
+
+  def max
+    (tickets_left >= 10) ? 10 : tickets_left
   end
 end
 
@@ -43,5 +51,10 @@ class Ticket < ActiveRecord::Base
   belongs_to :play_date
 
   validates_presence_of :user, :play_date
+
+  def qr_code
+    require './helpers'
+    Helpers.qrMarkup(code)
+  end
 end
 

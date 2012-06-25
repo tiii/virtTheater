@@ -52,7 +52,7 @@ module VirtTheater
     end
 
     get '/menu' do
-      check_acces
+      check_access
       haml :menu
     end
 
@@ -69,8 +69,8 @@ module VirtTheater
     end
 
     get '/tickets' do
-      check_acces
-      haml :tickets
+      check_access
+      haml :tickets, :locals => {:tickets => Ticket.where(:user_id => @user.id)}
     end
 
     get '/ticket/:id' do
@@ -82,12 +82,16 @@ module VirtTheater
     post '/tickets/buy' do
       check_access
 
+      playdate = PlayDate.find(params[:playdate])
+
       require 'digest'
-      ticket = Ticket.create(:user_id => @user.id, :playdate_id => params[:playdata])
+      ticket = Ticket.create(:user_id => @user.id, :play_date_id => params[:playdate])
       ticket.count = params[:ticket_count]
       ticket.code = Digest::MD5.hexdigest(@user.email+Time.now.usec.to_s)
-      if ticket.save
+      if (playdate.tickets_left >= ticket.count) && ticket.save
         {:success => true, :id => ticket.id}.to_json
+      else
+        {:success => false, :error => msg || "There was an Error."}
       end
     end
 

@@ -9,7 +9,7 @@
         %h3= play.title
         %p= "#{playdate.dayname}, #{playdate.datetime}"
         %p= "#{playdate.price} € p.p."
-        %p= "#{playdate.ticket_count} tickets left"
+        %p= "#{playdate.tickets_left} tickets left"
     - if logged_in?
       %p
         = "Hey #{user.first_name},"
@@ -21,7 +21,7 @@
         to buy Tickets
     %form{:method => "post", :id => "ticket-form"}
       %input{:type => "hidden", :name => "playdate", :value => playdate.id}
-      %input{:type => "range", :name => "ticket_count", :id => "ticket-count-slider", :value => 1, :min => 1, :max => 10, :disabled => !logged_in?}
+      %input{:type => "range", :name => "ticket_count", :id => "ticket-count-slider", :value=> 1, :min => 1, :max => playdate.max, :disabled => !logged_in?}
       -if logged_in?
         %a{:"data-role" => "button", :id => "ticket-submit"} Buy!
         :javascript

@@ -27,4 +27,22 @@ module Helpers
     string = string.gsub(/ /,"-")
     string = string.downcase
   end
+
+  def self.qrMarkup(code)
+    require 'rqrcode'
+    qr = RQRCode::QRCode.new(code)
+    str = "<table class=\"qrcode\">"
+    qr.modules.each_index do |x|
+      str += "<tr>"
+      qr.modules.each_index do |y|
+        if qr.dark?(x,y)
+          str += "<td class=\"black\"/>"
+        else
+          str += "<td class=\"white\"/>"
+        end
+      end
+      str += "</tr>"
+    end
+    str
+  end
 end

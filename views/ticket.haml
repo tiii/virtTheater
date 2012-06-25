@@ -1,0 +1,18 @@
+- require './helpers'
+- playdate = ticket.play_date
+- play = playdate.play
+%div{:"data-role" => "page", :"data-title" => "Virtual Theater - Ticket for #{play.title}"} 
+  %div{:"data-role" => "header"}
+    %a{:href => "/tickets", :"data-icon" => "back", :"data-transition" => "flip", :"data-direction" => "reverse"} Tickets
+    %h1 Virtual Theater
+    - if logged_in?
+      %a{:href => "/menu", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "grid"} Menu
+    - else
+      %a{:href => "/auth", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "gear"} Login
+      
+  %div{:"data-role" => "content"}
+    %h3= play.title
+    %p= playdate.full_date
+    %p= "Persons: #{ticket.count}"
+    =ticket.qr_code
+    %p= ticket.code
