@@ -15,13 +15,10 @@
     %div{:"data-role" => "collapsible"}
       %h3 Click to show dates
       - play.play_dates.each_with_index do |playdate, i|
-        - time = Time.at(playdate.playtime)
-        - dayname = time.strftime("%A")
-        - datetime = time.strftime("%d.%m.%Y %H:%M")
         %div
-          %p= "#{dayname}"
+          %p= "#{playdate.dayname}"
           %p
-            = "#{datetime} | #{playdate.price} €"
-            %a{:href => "/plays/#{playdate.play.id}/#{playdate.play.url_title}/buy"} Buy Tickets
+            = "#{playdate.datetime} | #{playdate.price} €"
+            %a{:href => "/plays/#{playdate.play.id}/#{playdate.play.url_title}/buy/#{playdate.id}"} Buy Tickets
 
     

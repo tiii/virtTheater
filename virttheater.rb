@@ -63,6 +63,10 @@ module VirtTheater
       haml :play, :locals => {:play => Play.find(params[:id])}
     end
 
+    get '/plays/:id/:title/buy/:playdate' do
+      haml :play_buy, :locals => {:play => Play.find(params[:id]), :playdate => PlayDate.find(params[:playdate])}
+    end
+
     get '/about' do
       haml :about
     end
