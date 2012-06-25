@@ -1,16 +1,25 @@
-%div{:"data-role" => "page"} 
+%div{:"data-role" => "page", :"data-title" => "Virtual Theater - Plays"} 
   %div{:"data-role" => "header"}
     %h1 Virtual Theater
     - if logged_in?
-      %a{:href => "/menu", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "grid"} My Account
+      %a{:href => "/menu", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "grid"} Menu
     - else
       %a{:href => "/auth", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "gear"} Login
+
+    %div{:"data-role" => "navbar"}
+      %ul
+        %li
+          %a{:href => "/", :"data-prefetch" => true} News
+        %li
+          %a{:href => "#", :class => "ui-btn-active"} Plays
+        %li
+          %a{:href => "/about", :"data-prefetch" => true} About
       
   %div{:"data-role" => "content"}
     %ul{:"data-role" => "listview"}
       - locals[:plays].each do |play|
         %li
-          %a{:href => "/plays/#{play.id}/#{play.title}"}
+          %a{:href => "/plays/#{play.id}/#{play.title}", :"data-transition" => "flip", :"data-prefetch" => true}
             %img{:src => "data:image/png;base64,#{play.picture}"}
             %h3= play.title
             %p= play.description

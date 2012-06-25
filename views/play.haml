@@ -1,10 +1,9 @@
-%div{:"data-role" => "page"} 
+%div{:"data-role" => "page", :"data-title" => "Virtual Theater - #{play.title}"} 
   %div{:"data-role" => "header"}
-    %a{:href => "#", :"data-rel" => "back", :"data-icon" => "back"} Back
-    - else
+    %a{:href => "#", :"data-rel" => "back", :"data-icon" => "back", :"data-transition" => "flip", :"data-direction" => "reverse"} Back
     %h1 Virtual Theater
     - if logged_in?
-      %a{:href => "/menu", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "grid"} My Account
+      %a{:href => "/menu", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "grid"} Menu
     - else
       %a{:href => "/auth", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "gear"} Login
       
