@@ -7,6 +7,35 @@
     // Authentication Dialog
     initAuthDialog: function(options) {
 
+      var setLoggedIn = function(response) {
+          $.getJSON('/auth/facebook/callback', response, function(json) {
+            $('#fb-login-status').html("You are now logged in.");
+            $.mobile.hidePageLoadingMsg();
+            $('#fb-close-button').show();
+          });
+        };
+
+      var checkForLogin = function() {
+        var loginButton = $('#fb-login');
+        var closeButton = $('#fb-close-button');
+
+        loginButton.hide();
+        closeButton.hide();
+        
+        FB.getLoginStatus(function(response) {
+          if (response.status === 'connected') {
+            setLoggedIn(response.authResponse);
+            loginButton.hide();
+          } else if (response.status === 'not_authorized') {
+            loginButton.show();
+            $('#fb-login-status').hide();
+          } else {
+            loginButton.show();
+            $('#fb-login-status').hide();
+          }
+        });
+      };
+
       window.fbAsyncInit = function() {
         $(function() {
           FB.init({
@@ -15,80 +44,56 @@
             cookie : true, // enable cookies to allow the server to access the session
             xfbml  : true  // parse XFBML
           });
-
-          var loginButton = $('#fb-login');
-          var logoutButton = $('#fb-logout');
-          var closeButton = $('#fb-close-button');
-          var statusText = $('#fb-login-status');
-
-          loginButton.hide();
-          logoutButton.hide();
-
-          var setLoggedIn = function(response) {
-            $.getJSON('/auth/facebook/callback', response, function(json) {
-              console.log("logged in");
-              statusText.html("You are already logged in.");
-            });
-          };
-
-          FB.getLoginStatus(function(response) {
-            if (response.status === 'connected') {
-              setLoggedIn(response.authResponse);
-              closeButton.show();
-              loginButton.hide();
-              logoutButton.hide();
-            } else if (response.status === 'not_authorized') {
-              loginButton.show();
-              logoutButton.hide();
-            } else {
-              loginButton.show();
-              logoutButton.hide();
-            }
-          });
-
-          // should load prevPage now!
-          closeButton.click(function(e) {
-            console.log("Now redirecting to window.prevPage: " + window.prevPage);
-            $.mobile.changePage(window.prevPage, "flip", true, true);
-          });
-
-          loginButton.click(function(e) {
-            e.preventDefault();
-
-            FB.login(function(response) {
-              if (response.authResponse) {
-                setLoggedIn(response.authResponse);
-              }
-            }, { scope: options.scope });
-          });
-
-          logoutButton.click(function(e) {
-            FB.logout(function(response) {
-              $.getJSON('/auth/facebook/logout', function(json) {
-                history.back();
-              });
-            });
-          });
         });
+        checkForLogin();
       };
+
+      // should load prevPage now!
+      $('#fb-close-button').click(function(e) {
+        $.mobile.changePage(window.prevPage,{reloadPage: true, changeHash: false});
+      });
+
+      $('#fb-login').unbind('click');
+      $('#fb-login').click(function(e) {
+        e.preventDefault();
+
+        FB.login(function(response) {
+          if (response.authResponse) {
+            setLoggedIn(response.authResponse);
+          }
+        }, { scope: options.scope });
+      });
 
       // Load the SDK Asynchronously
       (function(d){
-         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement('script'); js.id = id; js.async = true;
-         js.src = "//connect.facebook.net/en_US/all.js";
-         ref.parentNode.insertBefore(js, ref);
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) { checkForLogin(); return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
       }(document));
     },
     initMenuDialog: function(options) {
+      $('#logoutButton').unbind('click');
       $('#logoutButton').click(function(e) {
+        $.mobile.showPageLoadingMsg();
+        $(this).unbind('click');
         $.getJSON('/auth/logout', function(json) {
           if(json.success) {
-            console.log("logout: "+json.success);
-            $.mobile.changePage('/',{reloadPage: true});
+            $.mobile.changePage(window.prevPage,{reloadPage: true, changeHash: false});
           }
         });
+      });
+    },
+    initPlayBuyDialog: function(options) {
+      $('#ticket-submit').unbind('click');
+      $('#ticket-submit').click(function(e) {
+        $(this).unbind('click');
+        data = $('#ticket-form').serialize();
+        $.post('/tickets/buy', data, function(response) {
+          if(response.success)
+            $.mobile.changePage('/ticket/'+response.id);
+        }, "json");
       });
     },
     initAllPages: function(options){
@@ -116,7 +121,9 @@ $(document).bind("mobileinit", function() {
     $.mobile.page.prototype.options.addBackBtn = true;
 });
 
-$(document).bind("pagebeforeload", function() {
-    console.log("Setting window.prevPage: "+ $.mobile.activePage.data('url'));
-    window["prevPage"] = $.mobile.activePage.data('url');
+$(document).bind("pagebeforechange", function() {
+    if($.mobile.activePage !== undefined) {
+      console.log("Setting window.prevPage: "+ $.mobile.activePage.data('url'));
+      window["prevPage"] = $.mobile.activePage.data('url');
+    }
 });

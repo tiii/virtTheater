@@ -42,7 +42,6 @@ module VirtTheater
       u.first_name = graph.first_name
       u.last_name = graph.last_name
       u.access_token = graph.access_token
-      puts u.inspect
       {:success => u.save}.to_json
     end
 
@@ -53,6 +52,7 @@ module VirtTheater
     end
 
     get '/menu' do
+      check_acces
       haml :menu
     end
 
@@ -68,12 +68,39 @@ module VirtTheater
       haml :play_buy, :locals => {:user => @user, :play => Play.find(params[:id]), :playdate => PlayDate.find(params[:playdate])}
     end
 
+    get '/tickets' do
+      check_acces
+      haml :tickets
+    end
+
+    get '/ticket/:id' do
+      check_access
+      ticket = Ticket.find_by_id_and_user_id(params[:id], @user.id)
+      haml :ticket, :locals => {:ticket => ticket}
+    end
+
+    post '/tickets/buy' do
+      check_access
+
+      require 'digest'
+      ticket = Ticket.create(:user_id => @user.id, :playdate_id => params[:playdata])
+      ticket.count = params[:ticket_count]
+      ticket.code = Digest::MD5.hexdigest(@user.email+Time.now.usec.to_s)
+      if ticket.save
+        {:success => true, :id => ticket.id}.to_json
+      end
+    end
+
     get '/about' do
       haml :about
     end
 
     def logged_in?
       return !@user.nil?
+    end
+
+    def check_access
+      redirect '/' unless logged_in?
     end
   end
 
