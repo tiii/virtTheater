@@ -1,0 +1,18 @@
+%div{:"data-role" => "page"} 
+  %div{:"data-role" => "header"}
+    %h1 Virtual Theater
+    - if logged_in?
+      %a{:href => "/menu", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "grid"} My Account
+    - else
+      %a{:href => "/auth", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "gear"} Login
+      
+  %div{:"data-role" => "content"}
+    %ul{:"data-role" => "listview"}
+      - locals[:plays].each do |play|
+        %li
+          %a{:href => "/plays/#{play.id}/#{play.title}"}
+            %img{:src => "data:image/png;base64,#{play.picture}"}
+            %h3= play.title
+            %p= play.description
+
+    

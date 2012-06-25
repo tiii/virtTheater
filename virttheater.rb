@@ -46,6 +46,11 @@ module VirtTheater
       session[:oauth][:access_token] = {}
       redirect '/'
     end
+
+    get '/plays' do
+      haml :plays, :locals => {:plays => Play.all}
+    end
+
     get '/style.css' do
       sass :style
     end
