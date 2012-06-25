@@ -4,7 +4,7 @@
   %div{:"data-role" => "content"}
     .ui-grid-a
       .ui-block-a
-        %img{:src => "data:image/png;base64,#{play.picture}"}
+        %img{:src => "data:image/png;base64,#{play.picture}", :class => "ticketModalImage"}
       .ui-block-b
         %h3= play.title
         %p= "#{playdate.dayname}, #{playdate.datetime}"

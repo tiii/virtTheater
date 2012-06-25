@@ -1,6 +1,5 @@
 /config/environment.yml
 /db/*.db
-.gitignore
 
 *.rbc
 *.sassc
