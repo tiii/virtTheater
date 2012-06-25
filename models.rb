@@ -32,6 +32,10 @@ class PlayDate < ActiveRecord::Base
   def datetime
     timestamp.strftime("%d.%m.%Y %H:%M")
   end
+
+  def tickets_left
+    ticket_count
+  end
 end
 
 class Ticket < ActiveRecord::Base

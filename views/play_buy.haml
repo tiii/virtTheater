@@ -1,11 +1,21 @@
 %div{:"data-role" => "dialog", :"id" => "login-dialog"} 
   %div{:"data-role" => "header"}
-    %h1= "Buy Tickets for #{play.title}"
+    %h1= "Buy Ticket"
   %div{:"data-role" => "content"}
-    
+    .ui-grid-a
+      .ui-block-a
+        %img{:src => "data:image/png;base64,#{play.picture}"}
+      .ui-block-b
+        %h3= play.title
+        %p= "#{playdate.dayname}, #{playdate.datetime}"
+        %p= "#{playdate.price} €"
+        %p= "#{playdate.ticket_count} left"
     - if logged_in?
-      %a{:href => "/tickets", :"data-role" => "button"} My Tickets
-      %a{:href => "#", :id => "logoutButton", :"data-role" => "button"} Logout
+      %p
+        = "Hey #{user.first_name},"
+        How many Tickets do you want?
+      
+
     - else
       %p 
         You need to be
