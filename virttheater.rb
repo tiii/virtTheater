@@ -48,7 +48,8 @@ module VirtTheater
 
     get '/auth/logout' do
       session[:oauth][:access_token] = {}
-      {success: true}.to_json
+      @user = nil
+      {success:  !logged_in?}.to_json
     end
 
     get '/menu' do
