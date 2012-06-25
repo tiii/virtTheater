@@ -1,0 +1,13 @@
+%div{:"data-role" => "dialog", :"id" => "login-dialog"} 
+  %div{:"data-role" => "header"}
+    %h1= "Buy Tickets for #{play.title}"
+  %div{:"data-role" => "content"}
+    
+    - if logged_in?
+      %a{:href => "/tickets", :"data-role" => "button"} My Tickets
+      %a{:href => "#", :id => "logoutButton", :"data-role" => "button"} Logout
+    - else
+      %p 
+        You need to be
+        %a{:href => "/auth", :"data-rel" => "dialog", :"data-transition" => "pop"} logged in
+        to buy Tickets
