@@ -12,4 +12,12 @@
     %h3= play.title
     %p= play.description
 
+    %div{:"data-role" => "collapsible"}
+      %h3 Click to show dates
+      %div
+        .ui-grid-c
+          - a = ["a","b","c","d"]
+          - play.play_dates.each_with_index do |playdate, i|
+            %div{:class => "ui-block-#{a[i%4]}"}= "#{Time.at(playdate.playtime).to_date} | #{playdate.price} €"
+
     
