@@ -1,0 +1,18 @@
+%div{:"data-role" => "page", :"data-title" => "Virtual Theater - About"} 
+  %div{:"data-role" => "header"}
+    %h1 Virtual Theater
+    - if logged_in?
+      %a{:href => "/menu", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "grid"} Menu
+    - else
+      %a{:href => "/auth", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "gear"} Login
+      
+    %div{:"data-role" => "navbar"}
+      %ul
+        %li
+          %a{:href => "/", :"data-prefetch" => true} News
+        %li
+          %a{:href => "/plays", :"data-prefetch" => true} Plays
+        %li
+          %a{:href => "#", :class => "ui-btn-active"} About
+          
+  %div{:"data-role" => "content"}

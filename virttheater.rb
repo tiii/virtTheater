@@ -55,6 +55,10 @@ module VirtTheater
       haml :play, :locals => {:play => Play.find(params[:id])}
     end
 
+    get '/about' do
+      haml :about
+    end
+
     get '/style.css' do
       sass :style
     end
