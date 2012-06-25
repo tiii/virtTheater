@@ -1,0 +1,9 @@
+%div{:"data-role" => "dialog", :"id" => "login-dialog"} 
+  %div{:"data-role" => "header"}
+    %h1
+      Menu
+  %div{:"data-role" => "content"}
+    %a{:href => "/tickets", :"data-role" => "button"} My Tickets
+    %a{:href => "#", :id => "logoutButton", :"data-role" => "button"} Logout
+    :javascript
+        $().initApp("initMenuDialog", "#login-dialog");

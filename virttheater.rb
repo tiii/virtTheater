@@ -44,7 +44,11 @@ module VirtTheater
 
     get '/auth/logout' do
       session[:oauth][:access_token] = {}
-      redirect '/'
+      {success: true}.to_json
+    end
+
+    get '/menu' do
+      haml :menu
     end
 
     get '/plays' do
