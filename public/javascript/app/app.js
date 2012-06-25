@@ -2,7 +2,7 @@
 
   var methods = {
     initIndex: function(options) {
-
+      
     },
     // Authentication Dialog
     initAuthDialog: function(options) {
@@ -44,6 +44,12 @@
               loginButton.show();
               logoutButton.hide();
             }
+          });
+
+          // should load prevPage now!
+          closeButton.click(function(e) {
+            console.log("Now redirecting to window.prevPage: " + window.prevPage);
+            $.mobile.changePage(window.prevPage, "flip", true, true);
           });
 
           loginButton.click(function(e) {
@@ -98,4 +104,9 @@
 
 $(document).bind("mobileinit", function() {
     $.mobile.page.prototype.options.addBackBtn = true;
+});
+
+$(document).bind("pagebeforeload", function() {
+    console.log("Setting window.prevPage: "+ $.mobile.activePage.data('url'));
+    window["prevPage"] = $.mobile.activePage.data('url');
 });
