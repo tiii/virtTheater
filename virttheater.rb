@@ -45,6 +45,9 @@ module VirtTheater
     get '/auth/logout' do
       session[:oauth][:access_token] = {}
     end
+    get '/style.css' do
+      sass :style
+    end
 
     def logged_in?
       return (!@user.nil?)
