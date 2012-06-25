@@ -4,7 +4,6 @@ class CreateTickets < ActiveRecord::Migration
       t.integer :play_date_id
       t.integer :user_id
       t.integer :count
-      t.integer :cost
       t.string :code
     end
   end
