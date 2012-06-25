@@ -1,5 +1,10 @@
 %div{:"data-role" => "page"} 
   %div{:"data-role" => "header"}
-    %h1 Startseite
+    %h1 Virtual Theater
+    - if logged_in?
+      %a{:href => "/auth", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "gear"} Login
+    - else
+      %a{:href => "/menu", :class => "ui-btn-right", :"data-rel" => "dialog", :"data-transition" => "pop", :"data-icon" => "grid"} My Account
+    
   %div{:"data-role" => "content"}
-    %a{:href => "/auth", :"data-transition" => "flip"} Login
+    

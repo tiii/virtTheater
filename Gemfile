@@ -2,11 +2,15 @@ source 'https://rubygems.org'
 
 group :development do
   gem 'shotgun'  
+  gem 'sqlite3'
+end
+
+group :production do
+  gem 'postgres'
 end
 
 gem 'sinatra'
-gem 'activerecord'
 gem 'sinatra-activerecord'
 gem 'haml'
-gem 'omniauth-facebook'
 gem 'thin'
+gem 'fb_graph'
