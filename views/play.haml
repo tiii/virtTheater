@@ -15,9 +15,6 @@
     %div{:"data-role" => "collapsible"}
       %h3 Click to show dates
       - play.play_dates.each_with_index do |playdate, i|
-        - time = Time.at(playdate.playtime)
-        - dayname = time.strftime("%A")
-        - datetime = time.strftime("%d.%m.%Y %H:%M")
         %div
           %b= "#{dayname}"
           %span 
@@ -26,7 +23,4 @@
             = "#{playdate.price} €    "
             %span{:class => "ui-li-count ui-btn-up-c ui-btn-corner-all ticket-indicator"}    Tickets Available!  
             %a{:href => "/plays/#{playdate.play.id}/#{playdate.play.url_title}/buy", :"data-role" => "button", :"data-theme" => "b", :"data-inline" => "true", :"data-mini" => "true" } Buy Tickets
-          
           %hr
-
-    

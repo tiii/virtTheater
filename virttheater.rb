@@ -48,7 +48,8 @@ module VirtTheater
 
     get '/auth/logout' do
       session[:oauth][:access_token] = {}
-      {success: true}.to_json
+      @user = nil
+      {success:  !logged_in?}.to_json
     end
 
     get '/menu' do
@@ -61,6 +62,10 @@ module VirtTheater
 
     get '/plays/:id/:title' do
       haml :play, :locals => {:play => Play.find(params[:id])}
+    end
+
+    get '/plays/:id/:title/buy/:playdate' do
+      haml :play_buy, :locals => {:play => Play.find(params[:id]), :playdate => PlayDate.find(params[:playdate])}
     end
 
     get '/about' do

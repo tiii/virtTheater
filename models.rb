@@ -20,11 +20,24 @@ end
 class PlayDate < ActiveRecord::Base
   belongs_to :play
   has_many :tickets
+
+  def timestamp
+    Time.at(playtime)
+  end
+
+  def dayname
+    timestamp.strftime("%A")
+  end
+
+  def datetime
+    timestamp.strftime("%d.%m.%Y %H:%M")
+  end
 end
 
 class Ticket < ActiveRecord::Base
   belongs_to :user
   belongs_to :play_date
-  belongs_to :ticket
+
+  validates_presence_of :user, :play_date
 end
 
