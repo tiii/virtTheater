@@ -1,9 +1,14 @@
-require 'sinatra'
+require 'sinatra/activerecord'
+
+ActiveRecord::Base.establish_connection(
+    :adapter => "sqlite3",
+    #:dbfile  => ":memory:"
+    #:database  => ":memory:"
+    :database  => "./db/#{ENV["RACK_ENV"]}.db"
+)
+
 require './models'
-
 require './config/config'
-
-puts "conf", CONFIG.inspect
 
 module VirtTheater
 
